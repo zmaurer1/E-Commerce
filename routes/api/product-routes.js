@@ -6,11 +6,13 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 // get all products
 router.get('/', async (req, res) => {
   try{
+    console.log("Yay")
     const productData = await Product.findAll({
       include: [{ model:Category }, { model:Tag }],
     });
     res.status(200).json(productData);
   }catch(err) {
+    console.log("oops")
     res.status(500).json(err);
   }
   // find all products
@@ -38,7 +40,7 @@ router.get('/:id', async (req, res) => {
 // create new product
 router.post('/', (req, res) => {
   
-  
+  console.log(req)
   /* req.body should look like this...
     {
       product_name: "Basketball",
@@ -78,6 +80,7 @@ router.put('/:id', (req, res) => {
     },
   })
     .then((product) => {
+      console.log(product)
       // find all associated tags from ProductTag
       return ProductTag.findAll({ where: { product_id: req.params.id } });
     })
